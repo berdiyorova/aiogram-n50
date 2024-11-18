@@ -21,9 +21,10 @@ class CSVManager:
             writer.writerows(data)
 
     def add_data(self, data: list):
+        normalized_data = self.normalize_data(data)
         all_data = self.read_data()
-        if data not in all_data:
-            all_data.append(data)
+        if normalized_data not in (self.normalize_data(existing_data) for existing_data in all_data):
+            all_data.append(normalized_data)
         self.write_data(all_data)
         return "Data added successfully"
 
@@ -31,6 +32,10 @@ class CSVManager:
         os.remove(self.file_name)
         print("File deleted!")
         return True
+
+    @staticmethod
+    def normalize_data(data):
+        return [str(item).strip().lower() for item in data]
 
 
 

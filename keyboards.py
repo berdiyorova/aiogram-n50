@@ -13,7 +13,7 @@ async def get_users_keyboards(users):
         inline_keyboard=[
             [InlineKeyboardButton(
                 text=f"👉 Username: {list(user)[1]} ✨ Full name: {list(user)[2]}",
-                callback_data=f"{list(user)[0]} {list(user)[1]}")
+                callback_data=f"{list(user)[0]} {list(user)[2]}")
             ] for user in users
         ]
     )
