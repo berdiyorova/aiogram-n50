@@ -18,7 +18,7 @@ async def start(message: types.Message):
         text=f"<b>👨🏻‍💻 Hello, {message.from_user.full_name}!</b>  Welcome to our chat bot!",
         reply_markup=menu_keyboard
     )
-    data = [message.from_user.id, message.from_user.username, message.from_user.full_name]
+    data = [message.chat.id, message.from_user.username, message.from_user.full_name]
     user_manager.add_data(data=data)
 
 
@@ -36,8 +36,8 @@ async def select_user(message: types.Message, state: FSMContext):
 
 @dp.callback_query_handler(state='send-message')
 async def send_message(call: types.CallbackQuery, state: FSMContext):
-    user_id = call.data.split()[0]
-    username = call.data.split()[1]
+    user_id = call.data.split(' ')[0]
+    username = call.data.split(' ')[1]
     await state.update_data(user_id=user_id)
     await call.answer(f"Enter the message you want to send to {username}", show_alert=True)
     await state.set_state('get-message')
